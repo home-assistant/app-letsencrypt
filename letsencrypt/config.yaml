@@ -11,6 +11,7 @@ arch:
 boot: manual
 image: ghcr.io/home-assistant/app-letsencrypt
 init: false
+log_format: timestamp
 map:
   - ssl:rw
   - share
