@@ -1,4 +1,5 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/base-debian:trixie-2026.10.3
+# Base image updated by Renovate, update versionCompatibility on Debian base bump
+ARG BUILD_FROM=ghcr.io/home-assistant/base-debian:trixie-2026.11.0@sha256:d996c8f8ef0096a1ac3756766149b31b8171afc663068cc192f2bcab20f1b8c9
 FROM $BUILD_FROM
 
 # Allow pip to install packages system-wide on Debian
@@ -11,12 +12,12 @@ ENV PIP_BREAK_SYSTEM_PACKAGES=1
 ARG \
     ACME_VERSION=3.3.0 \
     CERTBOT_DNS_AZURE_VERSION=2.6.1 \
-    CERTBOT_DNS_EURODNS_VERSION=1.8.1 \
+    CERTBOT_DNS_EURODNS_VERSION=1.8.2 \
     CERTBOT_DNS_HURRICANE_ELECTRIC_VERSION=0.1.0 \
     CERTBOT_DNS_MULTI_VERSION=5.3.1 \
     CERTBOT_DNS_NORISNETWORK_VERSION=0.3.0 \
     CERTBOT_VERSION=3.3.0 \
-    CRYPTOGRAPHY_VERSION=44.0.2
+    CRYPTOGRAPHY_VERSION=44.0.3
 
 RUN \
     set -x \
