@@ -92,19 +92,18 @@ if bashio::config.has_value 'dns.transip_global_key'; then
     exit 1
 fi
 
-# Cleanup removed add-on options
-if bashio::config.exists 'dns.cloudxns_api_key'; then
-    bashio::addon.option 'dns.cloudxns_api_key'
-fi
-if bashio::config.exists 'dns.cloudxns_secret_key'; then
-    bashio::addon.option 'dns.cloudxns_secret_key'
-fi
-if bashio::config.exists 'keytype'; then
-    bashio::addon.option 'keytype'
-fi
-if bashio::config.exists 'dns.google_domains_access_token'; then
-    bashio::addon.option 'dns.google_domains_access_token'
-fi
-if bashio::config.exists 'dns.google_domains_zone'; then
-    bashio::addon.option 'dns.google_domains_zone'
-fi
+# Cleanup removed app options
+# Supervisor drops options unknown to the schema from the validated config
+# bashio::config reads, so check the stored options instead.
+options=$(bashio::app.options)
+for old_key in \
+    'dns.cloudxns_api_key' \
+    'dns.cloudxns_secret_key' \
+    'keytype' \
+    'dns.google_domains_access_token' \
+    'dns.google_domains_zone'; do
+    if bashio::jq.exists "${options}" ".${old_key}"; then
+        bashio::log.info "Removing ${old_key}"
+        bashio::app.option "${old_key}"
+    fi
+done
